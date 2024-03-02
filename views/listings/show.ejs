@@ -1,0 +1,134 @@
+
+<% layout("/layouts/boilerplate") %>
+
+<body>
+
+    <div class="row mt-3">
+        <div class="col-8 offset-3">
+            <h3><%= showList.title %></h3>
+            </div>
+            
+            <div class="card col-6 offset-3">
+                        <div class="card-body show-card-body ">
+                             <h4 class="card-title"><b></b></h4>
+                             
+                             <p class="card-text"><%= showList.description %></p>
+                             <p class="card-text">
+                                <%= showList.location %>, &nbsp;
+                                <%= showList.country %> <br><br>
+                                <small class="text-body-secondary"><b>&#8377; <%= showList.price.toLocaleString("en-IN") %></b></small>
+                            </p>
+                        </div >
+                        <div>
+                        <img src="<%= showList.image.url %>" class="card-img-bottom show-img" alt="<%= showList.image.filename %>">
+                        <p class="card-text"><i>Owned by: <%= showList.owner.username %></i></p>
+                        <p class="card-text"><i>Category: <%= showList.category %></i></p>
+                    </div>
+               
+        </div>
+
+        <% if (currUser && currUser._id.equals(showList.owner._id)) { %> <!--display edit/del btn to authorized user only -->
+
+        <div class="row btn-items">
+            <div class="col-4 offset-3">
+        <form method="GET" action="/listings/<%= showList.id %>/edit">
+            <button class="btn btn-warning" >Edit</button>
+        </form> 
+        </div>
+
+        <div class="col-2">
+        <form  method="POST" action="/listings/<%= showList.id %>?_method=DELETE">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+   <% } %>
+    
+    </div>
+
+    <!-- REVIEWS SECTION **check for registered/valid user-->
+    
+     
+   
+    <div class="col-8 offset-3 mb-3">
+        <hr />
+        <% if (currUser) { %> 
+        <h4>Leave a Review..</h4>
+       <form method="POST" action="/listings/<%= showList.id %>/reviews" novalidate class="needs-validation">
+        <!-- <div class="mb-3 mt-3">
+            <label class="form-label" for="rating">Rating</label>
+            <input class="form-range"  id="rating" name="Review[rating]" type="range" min="1" max="5">
+        </div> -->
+
+        <!--star rating-->
+        <div class="mb-3 mt-3">
+        <label class="form-label" for="rating">Rating</label>
+        <fieldset class="starability-coinFlip">
+
+            <input type="radio" id="no-rate" class="input-no-rate" name="Review[rating]" value="1" checked aria-label="No rating." />
+            <input type="radio" id="first-rate1" name="Review[rating]" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="Review[rating]" value="2" />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="Review[rating]" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="Review[rating]" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="Review[rating]" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+
+        <div class="mb-3 mt-3">
+            <label class="form-label" for="comment">Comment</label>
+            <textarea class="form-control" name="Review[comment]" id="comment" cols="50" rows="5" 
+            required 
+            placeholder="it was a thrilling experience...."></textarea>
+            <div class="invalid-feedback">
+                Please enter your feedback or comment.
+            </div>
+        
+        </div>
+        <button class="btn btn-outline-primary">Submit</button>
+       </form>
+       <% } %>
+
+        <!--display reviews-->
+      <h4>All Reviews</h4>
+      <!-- <p>< showList.reviews %></p> -->
+
+      <div class="row">
+      <% for (review of showList.reviews) { %>
+        <div class="card border-dark mb-3 col-5 ms-3 mb-3" style="max-width: 21rem;">
+            <div class="card-header border-success">
+                <h5 class="card-title">@<%= review.author.username %></h5>
+           
+            </div>
+            <div class="card-body">
+                <!-- <p class="card-text"><= review.rating %></p> -->
+                <p class="starability-result card-text" data-rating="<%= review.rating %>"> </p>
+              <p class="card-text"><%= review.comment %></p>
+            </div>
+            <!-- <div class="card-footer bg-transparent border-success">Footer</div> -->
+            <form method="POST" action="/listings/<%= showList.id %>/reviews/<%= review.id %>?_method=DELETE">
+                <button class="btn btn-dark mt-2 mb-3">Delete</button>
+            </form>
+          </div>
+      <% } %>
+    </div>
+   
+      
+    </div>
+
+    
+    </div>
+    </body>
+
+<!-- <ul>
+    <li> showList.title %></li>
+    <li> showList.description %></li>
+    <img src=" showList.image.url %>" alt=" showList.image.filename %>">
+    <li>&#8377;  showList.price.toLocaleString("en-IN") %></li>  
+    <li> showList.location %></li>
+    <li> showList.country %></li>
+</ul> -->
+<!-- func to enter commas in rupees INS- .toLocaleString("en-IN") -->

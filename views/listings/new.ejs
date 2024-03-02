@@ -1,0 +1,95 @@
+
+<body>
+    
+    <% layout("/layouts/boilerplate") %>
+    
+    <div class="row mt-4"> <!--|| margin-top-3|| encapsulating in row and each div-col so that each input fields are treated as cols -->
+        <div class="col-8 offset-2"> <!--agar  12 parts mei hai to div 8 parts occupy kre || left se align offset to center-->
+
+    <h3>Create a new Listing </h3>
+    <form method="POST" action="/listings" novalidate class="needs-validation"  enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input class="form-control" type="text" name="listing[title]" placeholder="add a catchy title" required />
+            <div class="valid-feedback">
+             looks good!
+            </div> 
+        </div>
+
+        <div class="mb-3"> <!--marginbottom 3 to add spacing-->
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="listing[description]" id="description" cols="50" rows="5" required></textarea> 
+            <div class="invalid-feedback">
+                Please provide a short description.
+            </div>
+        </div>
+
+        <!-- <div class="mb-3">
+            <label for="image" class="form-label">Image Link</label>
+            <input class="form-control" type="text" name="Listing[image]" placeholder="enter image URL/link">
+            
+        </div> -->
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Listing Image </label>
+            <input class="form-control" type="file" name="listing[image]" required >
+            
+        </div>
+
+        <div class="row"> <!-- for price[col-1st-4] &loc[col-2nd-8] on same line || p&l on individuals line when media: smallScreen= col-md-4/8- medium & md screen ke badd 4:8 col le,, usse phle entire col occupy kre  -->
+    
+        <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input class="form-control"  name="listing[price]" placeholder="1200" required />
+            <div class="invalid-feedback">
+                Please provide a valid price.
+            </div>
+        </div>
+
+        <div class="mb-3 col-md-8"> 
+            <label for="location" class="form-label">Location</label>
+            <input class="form-control" type="text" name="listing[location]" placeholder="Jaipur, Rajasthan" required /> 
+            <div class="invalid-feedback">
+                Please provide a valid location.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="country" class="form-label">Country</label>
+            <input class="form-control" type="text" name="listing[country]" placeholder="India" required /> 
+            <div class="invalid-feedback">
+                Please provide a valid country.
+            </div>
+        </div>
+
+        <!-- <div class="mb-3 col-md-8">
+            <label for="category" class="form-label">Category</label>
+    
+            <select class="form-select" >
+                <option selected>Choose Category</option>
+                <option value="1" name="listing[category]">trending</option>
+                <option value="2" name="listing[category]">rooms</option>
+                <option value="3" name="listing[category]">iconic cities</option>
+                <option value="4" name="listing[category]">mountains</option>
+                <option value="5" name="listing[category]">castles</option>
+                <option value="6" name="listing[category]">boats</option>
+                <option value="7" name="listing[category]">amazing pools</option>
+                <option value="8" name="listing[category]">camping</option>
+                <option value="9" name="listing[category]">farms</option>
+                <option value="10" name="listing[category]">arctic</option>
+                <option value="11" name="listing[category]">domes</option>
+              </select>
+        </div>
+    </div> -->
+
+        <button class="btn btn-primary offset-6 add-btn mt-3">Add</button>
+    </form>
+   <br><br>
+
+</div>
+
+</div>
+</body>

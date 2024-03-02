@@ -1,0 +1,72 @@
+<% layout("/layouts/boilerplate") %>
+<body>
+
+    <div class="row mt-4">
+        <div class="col-8 offset-2">
+    <h3>Edit Listing</h3>
+
+    <form method="POST" action="/listings/<%= findList.id  %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input class="form-control" type="text" name="listing[title]" value="<%= findList.title %>" required />
+            <div class="valid-feedback">
+                looks good!
+               </div>
+        </div> 
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control"  name="listing[description]" id="description" cols="50" rows="5" required><%= findList.description %></textarea>
+            <div class="invalid-feedback">
+                Please provide a short description.
+            </div>
+        </div> 
+
+        <div class="mb-3"> <!--PREVIEW IMAGE-->
+            <label for="img">Original Image</label> <br>
+            <img src="<%= originalImageUrl %>" alt="listingImg">
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label"> Upload New Image </label>
+            <input class="form-control" type="file" name="listing[image]" >
+            <div class="invalid-feedback">
+                Please provide a valid image url.
+            </div> 
+        </div> 
+
+        <div class="row"> <!--on same line-->
+
+        <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input class="form-control" type="number" name="listing[price]" value="<%= findList.price %>" required />
+            <div class="invalid-feedback">
+                Please provide a valid price.
+            </div> 
+        </div> 
+
+        <div class="mb-3 col-md-8">
+            <label for="location" class="form-label">Location</label>
+            <input class="form-control" type="text" name="listing[location]" value="<%= findList.location %>" required /> 
+            <div class="invalid-feedback">
+                Please provide a valid location.
+            </div>
+        </div>
+    </div>
+
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input class="form-control" type="text" name="listing[country]" value="<%= findList.country %>" required /> 
+            <div class="invalid-feedback">
+                Please provide a valid country.
+            </div>
+        </div> 
+
+        <button class="btn btn-dark add-btn mt-3">Update</button>
+    </form>
+    <br><br>
+</div>
+</div>
+
+<script src="/js/script.js"></script>
+</body>
