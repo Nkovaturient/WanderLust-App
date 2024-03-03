@@ -37,14 +37,6 @@
   });
 
   //search btn functionality
-  
-  // let btn=document.getElementsByClassName("search-btn");
-
-  // btn.addEventListener("click", ()=>{
-    
-  //   let inp= document.getElementsByClassName("search-inp").value;
-  //   console.log(inp);
-  // });
 
   //filter functionality
 

@@ -4,16 +4,55 @@ const Listing= require("../models/listing.js");
 
 module.exports.index= async(req, res)=>{
 
+    // let {q}= req.query;
+    // console.log(q);
     let allList= await Listing.find( { });
     res.render("./listings/index.ejs", {allList});
 
 };
+
+module.exports.searchLoc= async(req, res)=>{
+
+    const { venue } = req.query; //CASE-SENSITIVE
+    if(venue == "undefined"){
+        res.send("nothing searched");
+    } else{ 
+        // res.send(`searched for ${venue}`);
+
+        
+        let list= await Listing.find( {location : venue });
+        if(list && list.length) {
+        res.render("./listings/search.ejs", {venue, list});
+        } else {
+            req.flash("error", "either the listing does not exist or trying searching the location with the first letter capitalized!");
+         res.redirect("/listings");
+        }
+        
+     }
+
+    
+    
+
+    // // Construct MongoDB query
+    //     const query = {
+    //         $or: [
+    //             { country: { $regex: country, $options: 'i' } }, // Case-insensitive regex matching
+    //             { location: { $regex: location, $options: 'i' } }
+    //         ]
+    //     };
+
+    //     // Execute query
+    //     const result = await Listing.find(query);
+    //     console.log(result);
+};
+
 
 module.exports.renderNewForm= (req, res)=>{ //before view route cuz js mistakes "new" for "id" route 
     // console.log(req.user);
     //user must be authenticated-logged in to add/create listings
     res.render("./listings/new.ejs");
 };
+
 
 module.exports.showListing = async(req, res)=>{
     let {id}= req.params;

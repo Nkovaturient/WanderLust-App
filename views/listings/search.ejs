@@ -1,0 +1,52 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .row{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    h4{
+        /* color: #df2417; */
+        color: #1967c0;
+        font-size: large;
+        font-family: Georgia, 'Times New Roman', Times, serif;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+    .col{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+</style>
+
+<div class="row mt-4 row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <h4>Search results for :- <i class="fa-solid fa-location-dot"></i> <%= venue %></h4>
+    <div class="col">
+    <% for(let listing of list){ %>
+        <a href="/listings/<%= listing.id %>" style="text-decoration: none;"> 
+        <div class="card card-index" style="width: 20rem;">
+           <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.image.filename %>" style="height: 20rem;" />
+           
+            <div class="card-img-overlay"> <!--for hover effect overlay- adding style on img-top -->
+              <h5 class="card-title"> </h5>
+              <p class="card-text"></p>
+              <p class="card-text"><small></small></p>
+            </div>
+    
+           
+           <div class="card-body">
+               <p class="card-text">
+                <b><%= listing.title %></b> <br>
+                   &#8377; <%= listing.price.toLocaleString("en-IN") %> /night
+                 <i class="tax-info"> +18% GST</i>
+                </p>
+           </div>
+       </div>
+    </a>
+       <% } %>
+    </div>
+
+</div>

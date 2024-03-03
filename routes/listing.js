@@ -28,6 +28,8 @@ router.route("/")
 //New Route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
+//search route
+router.get("/search", listingController.searchLoc);
 
 
 router.route("/:id")
