@@ -19,7 +19,7 @@ const User = require('./models/user.js');
 const session  = require("express-session"); //require session
 const MongoStore = require('connect-mongo');
 
-const ejsMate= require("ejs-mate");
+const ejsMate= require("ejs-mate"); //for layout/includes/boilerplates
 app.engine("ejs", ejsMate);
 
 app.set("view engine", "ejs");
@@ -152,19 +152,20 @@ app.listen(port, ()=>{
 
 //INSERTING DATA AND TESTING
 // app.get("/testListing", async(req, res)=>{
-//   let sampleList=  new Listing( {
-//     title: " My new Villa",
-//     description: " amidst the snowflakes ",
-//     price: 2456,
-//     location: "Venezuela ",
-//     country: " Italy ",
-
-//   })
-//   await sampleList.save();
-//   console.log("sample was saved");
-//   res.send("successful testing!");
-
-// });
+//         let sampleList=  new Listing( {
+//           title: "Filtering category Villa",
+//           description: " amidst the snowflakes-its snow and solace ",
+//           price: 2456,
+//           location: "Bern ",
+//           country: " Switzerland",
+//           category: "rooms",
+      
+//         })
+//         await sampleList.save();
+//         console.log(`sample was saved : ${sampleList}`);
+//         res.send("successful testing!");
+      
+//       }); 
 
 //CREATE ROUTE
 // app.post("/listings", (req, res)=>{

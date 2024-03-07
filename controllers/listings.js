@@ -4,8 +4,6 @@ const Listing= require("../models/listing.js");
 
 module.exports.index= async(req, res)=>{
 
-    // let {q}= req.query;
-    // console.log(q);
     let allList= await Listing.find( { });
     res.render("./listings/index.ejs", {allList});
 
@@ -19,7 +17,6 @@ module.exports.searchLoc= async(req, res)=>{
     } else{ 
         // res.send(`searched for ${venue}`);
 
-        
         let list= await Listing.find( {location : venue });
         if(list && list.length) {
         res.render("./listings/search.ejs", {venue, list});
@@ -30,8 +27,6 @@ module.exports.searchLoc= async(req, res)=>{
         
      }
 
-    
-    
 
     // // Construct MongoDB query
     //     const query = {
@@ -47,7 +42,7 @@ module.exports.searchLoc= async(req, res)=>{
 };
 
 
-module.exports.renderNewForm= (req, res)=>{ //before view route cuz js mistakes "new" for "id" route 
+module.exports.renderNewForm= (req, res)=>{ //before show route cuz js mistakes "new" for "id" route 
     // console.log(req.user);
     //user must be authenticated-logged in to add/create listings
     res.render("./listings/new.ejs");
@@ -84,8 +79,13 @@ module.exports.createListing = async(req, res)=>{
     let newListing= new Listing(req.body.listing);
     newListing.owner= req.user._id; //to store the userinfo who added new listing **same for reviews**
     newListing.image= {url, filename}; //sending url and filename to our listing[image]
-     console.log(newListing);
+    //  console.log(newListing);
     //  console.log(req.user);
+
+    // if(!newListing.category) /*adding category field*/ 
+    //     newListing.category= "trending";
+    //     console.log(newListing);
+
      await newListing.save();
 
      req.flash("success", "New Listing Created!");
@@ -120,9 +120,14 @@ module.exports.updateListing = async(req, res)=>{
         let listing= await Listing.findByIdAndUpdate(id, {...req.body.listing});
 
         listing.image= {url, filename}; /**note the obj name */
+
+        if(!listing.category) /*adding category field*/ 
+        listing.category= "trend";
+
         await listing.save();
         // console.log(listing);
         // console.log(listing.image.url);
+        
         req.flash("success", "Listing Updated!"); 
         res.redirect(`/listings/${id}`); //redirecting to view/show route
     }
@@ -140,3 +145,20 @@ module.exports.destroyListing = async(req, res)=>{
     req.flash("success", "Listing Deleted!"); 
     res.redirect("/listings");
 };
+
+
+// module.exports.sampleListing= async(req, res)=>{
+//     let sampleList=  new Listing( {
+//       title: "Filtering category Villa",
+//       description: " amidst the snowflakes-its snow and solace ",
+//       price: 2456,
+//       location: "Bern ",
+//       country: " Switzerland",
+//       category: "rooms",
+  
+//     })
+//     await sampleList.save();
+//     console.log(`sample was saved : ${sampleList}`);
+//     res.send("successful testing!");
+  
+//   };
