@@ -12,8 +12,8 @@ module.exports.index= async(req, res)=>{
 module.exports.searchLoc= async(req, res)=>{
 
     const { venue } = req.query; //CASE-SENSITIVE
-    if(venue == "undefined"){
-        res.send("nothing searched");
+    if(venue == ""){
+      res.send("nothing searched!");
     } else{ 
         // res.send(`searched for ${venue}`);
 
@@ -21,7 +21,7 @@ module.exports.searchLoc= async(req, res)=>{
         if(list && list.length) {
         res.render("./listings/search.ejs", {venue, list});
         } else {
-            req.flash("error", "either the listing does not exist or trying searching the location with the first letter capitalized!");
+            req.flash("error", "either the listing does not exist or try searching the location with the first letter capitalized!");
          res.redirect("/listings");
         }
         
@@ -42,9 +42,15 @@ module.exports.searchLoc= async(req, res)=>{
 };
 
 
+//categorical listing
+module.exports.categoryList = (req, res) =>{
+    res.send(req.body);
+}
+
 module.exports.renderNewForm= (req, res)=>{ //before show route cuz js mistakes "new" for "id" route 
     // console.log(req.user);
     //user must be authenticated-logged in to add/create listings
+ 
     res.render("./listings/new.ejs");
 };
 
@@ -57,9 +63,7 @@ module.exports.showListing = async(req, res)=>{
         path: "author"
     }
 }).populate("owner"); //to extract detaileddata from ids of reviews, owner, and review author
-// let category= req.body.listing.category;
-//  let insCat= await Listing.push(category);
-//  console.log(insCat);
+
     // console.log(showList); //** express.urlencoded **
     if(!showList){
         req.flash("error", "Listing you requested for does not exists!");
@@ -79,13 +83,13 @@ module.exports.createListing = async(req, res)=>{
     let newListing= new Listing(req.body.listing);
     newListing.owner= req.user._id; //to store the userinfo who added new listing **same for reviews**
     newListing.image= {url, filename}; //sending url and filename to our listing[image]
-    //  console.log(newListing);
+    // newListing.category = req.body.category.validate(value => {
+    //     return newListing.statics.enumValues.includes(value);
+    // }, 'invalid category'); 
+    
+     console.log(newListing);
     //  console.log(req.user);
-
-    // if(!newListing.category) /*adding category field*/ 
-    //     newListing.category= "trending";
-    //     console.log(newListing);
-
+ 
      await newListing.save();
 
      req.flash("success", "New Listing Created!");
@@ -122,7 +126,7 @@ module.exports.updateListing = async(req, res)=>{
         listing.image= {url, filename}; /**note the obj name */
 
         if(!listing.category) /*adding category field*/ 
-        listing.category= "trend";
+        listing.category= "trending";
 
         await listing.save();
         // console.log(listing);
@@ -149,12 +153,12 @@ module.exports.destroyListing = async(req, res)=>{
 
 // module.exports.sampleListing= async(req, res)=>{
 //     let sampleList=  new Listing( {
-//       title: "Filtering category Villa",
-//       description: " amidst the snowflakes-its snow and solace ",
-//       price: 2456,
-//       location: "Bern ",
-//       country: " Switzerland",
-//       category: "rooms",
+//         title: "Another Filtering category Villa",
+//         description: "Perplexing amidst the snowflakes-its snow and solace ",
+//         price: 2500,
+//         location: "Zurich",
+//         country: "Switzerland",
+//         category: "amazing pools",
   
 //     })
 //     await sampleList.save();

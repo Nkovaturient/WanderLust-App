@@ -30,8 +30,8 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-const MONGO_URL= "mongodb://127.0.0.1:27017/wanderlust";
-// const dbUrl= process.env.ATLASDB_URL; //start from cprompt as well
+// const MONGO_URL= "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl= process.env.ATLASDB_URL; //start from cprompt as well
 
 //creating our database
 main().then(()=>{
@@ -44,13 +44,13 @@ main().then(()=>{
 
 
 async function main() { 
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
   }
 
 
   //define mongoStore
 const store= MongoStore.create({
-    mongoUrl: MONGO_URL, //or 'mongoUrl/dbUrl, if local/cloudAtlas
+    mongoUrl: dbUrl, //or 'mongoUrl/dbUrl, if local/cloudAtlas
     crypto:{
         secret: process.env.SECRET,
     },
@@ -81,7 +81,7 @@ const reviewRouter = require("./routes/review.js");
 const demouserRouter = require("./routes/user.js");
 
 
-app.use(session(sessionOptions)); //use mw session
+app.use(session(sessionOptions)); //use mw  express-session
 app.use(flash()); // flash mw
 
 //after session mw implement passport 
@@ -153,12 +153,12 @@ app.listen(port, ()=>{
 //INSERTING DATA AND TESTING
 // app.get("/testListing", async(req, res)=>{
 //         let sampleList=  new Listing( {
-//           title: "Filtering category Villa",
-//           description: " amidst the snowflakes-its snow and solace ",
-//           price: 2456,
-//           location: "Bern ",
-//           country: " Switzerland",
-//           category: "rooms",
+//           title: "Another Filtering category Villa",
+//           description: "Perplexing amidst the snowflakes-its snow and solace ",
+//           price: 2500,
+//           location: "Zurich",
+//           country: "Switzerland",
+//           category: "amazing pools",
       
 //         })
 //         await sampleList.save();

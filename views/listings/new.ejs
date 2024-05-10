@@ -1,6 +1,6 @@
 
 <body>
-    
+   
     <% layout("/layouts/boilerplate") %>
     
     <div class="row mt-4"> <!--|| margin-top-3|| encapsulating in row and each div-col so that each input fields are treated as cols -->
@@ -67,20 +67,12 @@
 
         <div class="mb-3 col-md-8">
             <label for="category" class="form-label">Category</label>
-    
-            <select class="form-select" id="category" name="listing[category]" >
-                <option selected>Choose Category</option>
-                <option value="trending">trending</option>
-                <option value="rooms">rooms</option>
-                <option value="iconic cities">iconic cities</option>
-                <option value="mountains">mountains</option>
-                <option value="castles">castles</option>
-                <option value="boats">boats</option>
-                <option value="amazing pools">amazing pools</option>
-                <option value="camping">camping</option>
-                <option value="farms">farms</option>
-                <option value="arctic">arctic</option>
-                <option value="domes">domes</option>
+            <select class="form-select" id="category" name="category" >
+
+                <% ["trending", "rooms", "iconic cities", "mountains", "castles", "amazing pools", "camping","farms", "arctic", "domes", "boats"].forEach(option => {  %>
+                    <option value="<%= option %>"><%= option %></option> 
+             
+                    <% }) %>
               </select>
         </div>
     </div>
