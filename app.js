@@ -31,7 +31,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, "/public")));
 
 // const MONGO_URL= "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl= process.env.ATLASDB_URL; //start from cprompt as well
+const dbUrl= process.env.ATLASDB_URL; //start from cprompt as well-atlas shell url and same pass
 
 //creating our database
 main().then(()=>{
@@ -120,12 +120,6 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", demouserRouter);
 
-
-
-//ROOT Route
-// app.get("/", (req, res)=>{
-//     res.send("activated!");
-// });
 
 
 //PAGE NOT FOUND
