@@ -2,6 +2,8 @@
 
 🚀Designed & Deployed successfully my first Full-Stack Web Applications: WanderLust! 🚀✨
 
+![wanderlust](https://github.com/Nkovaturient/WanderLust-App/assets/127786136/43e26ee8-036f-406e-b572-d3da73a76a7a)
+
 ## 🍀About
 
 Wanderlust is a go-to destination for finding cozy, comfortable, and convenient short-term rentals around the globe. Inspired by the user-friendly interface of Airbnb, I have meticulously designed and developed this platform using the latest technologies to ensure a seamless experience for both hosts and guests.
