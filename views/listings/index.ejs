@@ -114,7 +114,7 @@
         <% for(let list of allList){ %>
             <a href="/listings/<%= list.id %>" style="text-decoration: none;"> 
             <div class="card card-index" style="width: 20rem;">
-               <img src="<%= list.image %>" class="card-img-top" alt="<%= list.image %>" style="height: 20rem;" />
+               <img src="<%= list.image.url %>" class="card-img-top" alt="<%= list.image.filename %>" style="height: 20rem;" />
                
                 <div class="card-img-overlay"> <!--for hover effect overlay- adding style on img-top -->
                   <h5 class="card-title"> </h5>
