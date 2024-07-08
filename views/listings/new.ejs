@@ -67,12 +67,18 @@
 
         <div class="mb-3 col-md-8">
             <label for="category" class="form-label">Category</label>
-            <select class="form-select" id="category" name="category" >
-
-                <% ["trending", "rooms", "iconic cities", "mountains", "castles", "amazing pools", "camping","farms", "arctic", "domes", "boats"].forEach(option => {  %>
-                    <option value="<%= option %>"><%= option %></option> 
-             
-                    <% }) %>
+            <select class="form-select" id="category" name="listing[category]" >
+                <option value="trending">Trending</option>
+                <option value="rooms">Rooms</option>
+                <option value="iconic cities">Iconic Cities</option>
+                <option value="mountains">Mountains</option>
+                <option value="castles">Castles</option>
+                <option value="amazing pools">Amazing Pools</option>
+                <option value="camping">Camping</option>
+                <option value="farms">Farms</option>
+                <option value="arctic">Arctic</option>
+                <option value="domes">Domes</option>
+                <option value="boats">Boats</option>
               </select>
         </div>
     </div>

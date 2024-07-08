@@ -11,6 +11,7 @@ module.exports.listingSchema= Joi.object( {
         price: Joi.number().required().min(100),
         location: Joi.string().required(),
         country: Joi.string().required(),
+        category: Joi.string().valid("trending", "rooms", "iconic cities", "mountains", "castles", "amazing pools", "camping","farms", "arctic", "domes", "boats")
     }).required(), //Listing naam ki object honi chahiye-- Listing[title/desc/..]-**like this
 });
 

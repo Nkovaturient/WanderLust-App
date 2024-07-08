@@ -1,7 +1,6 @@
 const Listing= require("../models/listing.js");
 
 
-
 module.exports.index= async(req, res)=>{
 
     let allList= await Listing.find( { });
@@ -12,10 +11,15 @@ module.exports.index= async(req, res)=>{
 module.exports.searchLoc= async(req, res)=>{
 
     const { venue } = req.query; //CASE-SENSITIVE
+
+    const place= venue.charAt(0).toUpperCase();
+    console.log(place);
+
     if(venue == ""){
       res.send("nothing searched!");
     } else{ 
         // res.send(`searched for ${venue}`);
+      
 
         let list= await Listing.find( {location : venue });
         if(list && list.length) {
@@ -50,8 +54,8 @@ module.exports.categoryList = (req, res) =>{
 module.exports.renderNewForm= (req, res)=>{ //before show route cuz js mistakes "new" for "id" route 
     // console.log(req.user);
     //user must be authenticated-logged in to add/create listings
- 
-    res.render("./listings/new.ejs");
+    // const categories=["trending", "rooms", "iconic cities", "mountains", "castles", "amazing pools", "camping","farms", "arctic", "domes", "boats"];
+    res.render("./listings/new.ejs" );
 };
 
 
@@ -83,10 +87,8 @@ module.exports.createListing = async(req, res)=>{
     let newListing= new Listing(req.body.listing);
     newListing.owner= req.user._id; //to store the userinfo who added new listing **same for reviews**
     newListing.image= {url, filename}; //sending url and filename to our listing[image]
-    // newListing.category = req.body.category.validate(value => {
-    //     return newListing.statics.enumValues.includes(value);
-    // }, 'invalid category'); 
-    
+    let{category}=req.body.listing;
+    newListing.category=category; 
      console.log(newListing);
     //  console.log(req.user);
  

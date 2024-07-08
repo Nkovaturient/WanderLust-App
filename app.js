@@ -30,8 +30,8 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-// const MONGO_URL= "mongodb://127.0.0.1:27017/wanderlust";
-const dbUrl= process.env.ATLASDB_URL; //start from cprompt as well-atlas shell url and same pass
+const MONGO_URL= "mongodb://127.0.0.1:27017/wanderlust";
+// const dbUrl= process.env.ATLASDB_URL; //start from cprompt as well-atlas shell url and same pass
 
 //creating our database
 main().then(()=>{
@@ -44,13 +44,13 @@ main().then(()=>{
 
 
 async function main() { 
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(MONGO_URL);
   }
 
 
   //define mongoStore
 const store= MongoStore.create({
-    mongoUrl: dbUrl, //or 'mongoUrl/dbUrl, if local/cloudAtlas
+    mongoUrl: MONGO_URL, //or 'mongoUrl/dbUrl, if local/cloudAtlas
     crypto:{
         secret: process.env.SECRET,
     },
@@ -79,6 +79,7 @@ const sessionOptions= {
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const demouserRouter = require("./routes/user.js");
+const Listing = require('./models/listing.js');
 
 
 app.use(session(sessionOptions)); //use mw  express-session
@@ -121,6 +122,22 @@ app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", demouserRouter);
 
 
+//INSERTING DATA AND TESTING
+// app.get("/test", async(req, res)=>{
+//     let sampleList=  new Listing( {
+//       title: "Villa in Categorical Testing Caught",
+//       description: "Perplexing amidst the snowflakes-its snow and solace ",
+//       price: 1800,
+//       location: "Ottawa",
+//       country: "Canada",
+  
+//     });
+//     sampleList.category="iconic cities";
+//     await sampleList.save();
+//     console.log(`sample was saved : ${sampleList}`);
+//     res.send("successful testing!");
+  
+//   }); 
 
 //PAGE NOT FOUND
 app.all( "*", (req, res, next)=>{
@@ -144,22 +161,7 @@ app.listen(port, ()=>{
 
 
 
-//INSERTING DATA AND TESTING
-// app.get("/testListing", async(req, res)=>{
-//         let sampleList=  new Listing( {
-//           title: "Another Filtering category Villa",
-//           description: "Perplexing amidst the snowflakes-its snow and solace ",
-//           price: 2500,
-//           location: "Zurich",
-//           country: "Switzerland",
-//           category: "amazing pools",
-      
-//         })
-//         await sampleList.save();
-//         console.log(`sample was saved : ${sampleList}`);
-//         res.send("successful testing!");
-      
-//       }); 
+
 
 //CREATE ROUTE
 // app.post("/listings", (req, res)=>{
