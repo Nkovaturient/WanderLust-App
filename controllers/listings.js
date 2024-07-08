@@ -11,21 +11,20 @@ module.exports.index= async(req, res)=>{
 module.exports.searchLoc= async(req, res)=>{
 
     const { venue } = req.query; //CASE-SENSITIVE
-
-    const place= venue.charAt(0).toUpperCase();
+    const caps = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
+    
+    const place= caps(venue);
     console.log(place);
 
-    if(venue == ""){
+    if(place == ""){
       res.send("nothing searched!");
     } else{ 
-        // res.send(`searched for ${venue}`);
-      
-
-        let list= await Listing.find( {location : venue });
+    
+        let list= await Listing.find( {location : place });
         if(list && list.length) {
-        res.render("./listings/search.ejs", {venue, list});
+        res.render("./listings/search.ejs", {place, list});
         } else {
-            req.flash("error", "either the listing does not exist or try searching the location with the first letter capitalized!");
+            req.flash("error", "No listing Found!");
          res.redirect("/listings");
         }
         
