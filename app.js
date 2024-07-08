@@ -30,8 +30,8 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-const MONGO_URL= "mongodb://127.0.0.1:27017/wanderlust";
-// const dbUrl= process.env.ATLASDB_URL; //start from cprompt as well-atlas shell url and same pass
+const MONGO_URL= process.env.MONGO_URL;
+const dbUrl= process.env.ATLASDB_URL; 
 
 //creating our database
 main().then(()=>{
@@ -44,13 +44,13 @@ main().then(()=>{
 
 
 async function main() { 
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
   }
 
 
   //define mongoStore
 const store= MongoStore.create({
-    mongoUrl: MONGO_URL, //or 'mongoUrl/dbUrl, if local/cloudAtlas
+    mongoUrl: dbUrl, //or 'mongoUrl/dbUrl, if local/cloudAtlas
     crypto:{
         secret: process.env.SECRET,
     },
