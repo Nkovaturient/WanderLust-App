@@ -1,6 +1,6 @@
 # ⭐❄️Wanderlust : Online Lodging Market Place for Short Term Rentals 🍀
 
-🚀Designed & Deployed successfully my first Full-Stack Web Applications: WanderLust! 🚀✨
+🚀Designed & Deployed successfully my first Full-Stack Web Applications: WanderLust!— an Airbnb Clone 🚀✨
 
 ![wanderlust](https://github.com/Nkovaturient/WanderLust-App/assets/127786136/43e26ee8-036f-406e-b572-d3da73a76a7a)
 
