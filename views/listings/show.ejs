@@ -1,6 +1,17 @@
 
 <% layout("/layouts/boilerplate") %>
-
+<style>
+    #map { 
+    height: 400px;
+    width: 80vh;
+    }
+    </style>
+    <script>
+        const mapToken="<%= process.env.MAP_TOKEN %>";
+        const locatext="<%= showList.location %>";
+        const list=<%- JSON.stringify(showList) %>;
+        const geocode=<%- JSON.stringify(showList.geometry.coordinates) %>; //will return err hence jsonstringify
+    </script>
 <body>
 
     <div class="row mt-3">
@@ -93,10 +104,10 @@
        <% } %>
 
         <!--display reviews-->
-      <h4>All Reviews</h4>
-      <!-- <p>< showList.reviews %></p> -->
-
+      
+        <% if(showList.reviews.length > 0)  { %>
       <div class="row">
+        <h4>All Reviews</h4>
       <% for (review of showList.reviews) { %>
         <div class="card border-dark mb-3 col-5 ms-3 mb-3" style="max-width: 21rem;">
             <div class="card-header border-success">
@@ -116,21 +127,14 @@
             <% } %>
           </div>
       <% } %>
+    </div> 
+    <% } %>
     </div>
-   
-      
+    <div class="col-8 offset-3 mb-3">
+        <h3>Where you'll be</h3>
+        <br>
+        <div id="map"></div>
     </div>
-
-    
     </div>
     </body>
-
-<!-- <ul>
-    <li> showList.title %></li>
-    <li> showList.description %></li>
-    <img src=" showList.image.url %>" alt=" showList.image.filename %>">
-    <li>&#8377;  showList.price.toLocaleString("en-IN") %></li>  
-    <li> showList.location %></li>
-    <li> showList.country %></li>
-</ul> -->
-<!-- func to enter commas in rupees INS- .toLocaleString("en-IN") -->
+    <script src="/js/map.js"></script>

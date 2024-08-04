@@ -1,5 +1,10 @@
 const Listing= require("../models/listing.js");
-
+const mbxClient=require('@mapbox/mapbox-sdk');
+// const { default: Geocoding } = require("@mapbox/mapbox-sdk/services/geocoding");
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapToken=process.env.MAP_TOKEN;
+const baseClient=mbxClient({ accessToken: mapToken });
+const geocodingClient = mbxGeocoding(baseClient);
 
 module.exports.index= async(req, res)=>{
 
@@ -7,6 +12,37 @@ module.exports.index= async(req, res)=>{
     res.render("./listings/index.ejs", {allList});
 
 };
+
+module.exports.createListing = async(req, res)=>{
+
+    const geocode= await geocodingClient.forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1, //allow 1 corodinate for a place[long, lat]
+    })
+    .send();
+
+        // console.log(geocode.body.features[0].geometry); 
+        // res.send('done');
+
+    let url= req.file.path;
+    let filename= req.file.filename;
+    // console.log(url, "...", filename);
+   
+    let newListing= new Listing(req.body.listing);
+    newListing.owner= req.user._id; //to store the userinfo who added new listing **same for reviews**
+    newListing.image= {url, filename}; //sending url and filename to our listing[image]
+    let{category}=req.body.listing;
+    newListing.category=category; 
+
+    newListing.geometry= geocode.body.features[0].geometry;
+ 
+    let newList=  await newListing.save();
+    console.log(newList);
+
+    req.flash("success", "New Listing Created!");
+    res.redirect("/listings"); //ye display hoga index page hence= index.ejs
+    
+ };
 
 module.exports.searchLoc= async(req, res)=>{
 
@@ -75,28 +111,6 @@ module.exports.showListing = async(req, res)=>{
     
     res.render("./listings/show.ejs", {showList});
 };
-
-
-module.exports.createListing = async(req, res)=>{
-
-    let url= req.file.path;
-    let filename= req.file.filename;
-    // console.log(url, "...", filename);
-   
-    let newListing= new Listing(req.body.listing);
-    newListing.owner= req.user._id; //to store the userinfo who added new listing **same for reviews**
-    newListing.image= {url, filename}; //sending url and filename to our listing[image]
-    let{category}=req.body.listing;
-    newListing.category=category; 
-     console.log(newListing);
-    //  console.log(req.user);
- 
-     await newListing.save();
-
-     req.flash("success", "New Listing Created!");
-     res.redirect("/listings"); //ye display hoga index page hence= index.ejs
-    
- };
 
 
  module.exports.renderEditForm = async(req, res)=>{
