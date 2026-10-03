@@ -22,7 +22,7 @@
     "ejs-mate": "^4.0.0",
     "express": "^4.22.1",
     "express-session": "^1.18.0",
-    "joi": "^17.12.1",
+    "joi": "^17.13.7",
     "method-override": "^3.0.0",
     "mongoose": "^8.9.5",
     "multer": "^2.3.0",
